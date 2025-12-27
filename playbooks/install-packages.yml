@@ -1,0 +1,8 @@
+---
+- name: Configure all docker lab servers
+  hosts: docker_lab
+  become: yes  # Use sudo to run as root
+  
+  roles:
+    - common    # Install common tools first
+    - nginx     # Then install nginx

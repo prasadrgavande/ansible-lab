@@ -1,0 +1,13 @@
+---
+- name: My First Setup
+  hosts: local
+  tasks:
+    - name: Say Hello
+      ansible.builtin.debug:
+        msg: "Hello from Ansible on WSL!"
+
+    - name: Ensure a specific file exists
+      ansible.builtin.file:
+        path: ~/ansible_test_file.txt
+        state: touch
+        mode: '0644'

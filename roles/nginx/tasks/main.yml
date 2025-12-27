@@ -1,0 +1,29 @@
+---
+# This is the main task file for the nginx role
+# It installs and starts nginx on the target servers
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install nginx
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+
+- name: Start and enable nginx service
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Verify nginx is listening on port 80
+  ansible.builtin.shell: netstat -tuln | grep :80 || ss -tuln | grep :80
+  register: nginx_check
+  ignore_errors: yes
+
+- name: Print nginx port check
+  ansible.builtin.debug:
+    msg: "Nginx is listening on port 80"
+  when: nginx_check is succeeded

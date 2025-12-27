@@ -1,0 +1,19 @@
+---
+# Common setup tasks for all environments
+
+- name: Install common utilities
+  ansible.builtin.apt:
+    name:
+      - curl
+      - wget
+      - git
+      - vim
+    state: present
+
+- name: Create a welcome message
+  ansible.builtin.copy:
+    content: "Welcome to {{ inventory_hostname }} environment!"
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: '0644'
